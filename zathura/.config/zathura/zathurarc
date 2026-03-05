@@ -1,0 +1,6 @@
+set selection-clipboard clipboard
+
+map [normal] d scroll half-down
+map [normal] u scroll half-up
+map [normal] <C-e> file_chooser
+set guioptions h
