@@ -1,8 +1,8 @@
 firefox
 fzf
-keyd
 git
 hyprland
+keyd
 lazygit
 npm
 nvim
@@ -10,6 +10,8 @@ os-prober
 ripgrep
 stow
 tmux
+unzip
 wlsunset
 zathura
+zathura-pdf-poppler
 zsh
