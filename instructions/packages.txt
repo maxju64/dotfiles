@@ -1,4 +1,5 @@
 firefox
+tree
 fzf
 git
 hyprland
