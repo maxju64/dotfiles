@@ -1,0 +1,15 @@
+firefox
+fzf
+keyd
+git
+hyprland
+lazygit
+npm
+nvim
+os-prober
+ripgrep
+stow
+tmux
+wlsunset
+zathura
+zsh
