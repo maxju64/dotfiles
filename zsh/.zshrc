@@ -7,6 +7,8 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+export NVIDIA_DRIVER_CAPABILITIES=all
+export TERMINAL=kitty
 
 HIST_STAMPS="yyyy-mm-dd"
 plugins=(git)
@@ -69,3 +71,4 @@ whatsonport() {
 }
 
 # [[ -z "$TMUX" ]] && tmux attach 2>/dev/null
+export PATH="$HOME/.npm-global/bin:$PATH"
