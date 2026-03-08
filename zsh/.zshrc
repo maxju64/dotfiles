@@ -70,5 +70,9 @@ whatsonport() {
     lsof -i tcp:$1
 }
 
+pm(){
+  pacmixer
+}
+
 # [[ -z "$TMUX" ]] && tmux attach 2>/dev/null
 export PATH="$HOME/.npm-global/bin:$PATH"
