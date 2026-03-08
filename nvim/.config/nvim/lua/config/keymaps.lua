@@ -10,4 +10,9 @@ vim.keymap.set("n", "<Esc>", function()
   return "<Esc>"
 end, { expr = true })
 
+-- Send command to the pane below and run it
+vim.keymap.set("n", "<leader>m", function()
+  vim.fn.system("tmux send-keys -t '{down-of}' 'make run' Enter")
+end, { desc = "Run make in pane below" })
+
 vim.keymap.set({ "x" }, "y", '"+y', { desc = "Copy to system clipboard" })

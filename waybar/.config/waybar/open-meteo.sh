@@ -1,11 +1,8 @@
 #!/bin/bash
-LOCATION=$(curl -s https://ipapi.co/json/)
-LAT=$(echo "$LOCATION" | jq -r '.latitude')
-LON=$(echo "$LOCATION" | jq -r '.longitude')
 
 i=1
 while [ $i -le 5 ]; do
-  response=$(curl -s "https://api.open-meteo.com/v1/forecast?latitude=$LAT&longitude=$LON&current_weather=true&temperature_unit=celsius")
+  response=$(curl -s "https://api.open-meteo.com/v1/forecast?latitude=33.9069&longitude=-118.0833&current_weather=true&temperature_unit=celsius")
   if [ $? -eq 0 ]; then
     temp=$(echo "$response" | grep -o '"temperature":[0-9.]*' | grep -o '[0-9.]*')
     weathercode=$(echo "$response" | grep -o '"weathercode":[0-9]*' | grep -o '[0-9]*')
