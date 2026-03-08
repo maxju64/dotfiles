@@ -1,0 +1,44 @@
+* {
+    font-family: "AdwaitaMono Nerd Font Mono";
+    font-weight: 600;
+}
+
+.module {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+#custom-gentoo {
+    padding-left: 2px;
+}
+
+window#waybar {
+    background-color: #181825;
+    border: 2px solid #b4befe;
+    padding-left: 2px;
+}
+
+#battery.warning {
+    border: 2px solid #f9e2af;
+}
+
+#battery.critical {
+    border: 2px solid #f38ba8;
+}
+
+#network.ethernet {
+    background-color: #b4befe;
+}
+
+#workspaces {
+    border: 2px solid #b4befe;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#workspaces button {
+    border-radius: 0;
+    color: #cdd6f4;
+    padding-left: 2px;
+    padding-right: 2px;
+}
