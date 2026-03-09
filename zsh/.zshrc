@@ -74,5 +74,49 @@ pm(){
   pacmixer
 }
 
+yt2gif() {
+  local url="$1"
+  local outdir="$HOME/Pictures/gifs"
+  mkdir -p "$outdir"
+
+  # Download best mp4, filename = video ID
+  yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]" \
+    --merge-output-format mp4 \
+    -o "${outdir}/%(id)s.mp4" "$url"
+
+  # Get the video ID yt-dlp resolved
+  local id=$(yt-dlp --get-id "$url")
+  local mp4="${outdir}/${id}.mp4"
+
+  # Get original video stats
+  local fps=$(ffprobe -v error -select_streams v:0 \
+    -show_entries stream=r_frame_rate \
+    -of default=noprint_wrappers=1:nokey=1 "$mp4" | bc)
+
+  local width=$(ffprobe -v error -select_streams v:0 \
+    -show_entries stream=width \
+    -of default=noprint_wrappers=1:nokey=1 "$mp4")
+
+  local bitrate=$(ffprobe -v error -select_streams v:0 \
+    -show_entries stream=bit_rate \
+    -of default=noprint_wrappers=1:nokey=1 "$mp4")
+
+  local palette="${outdir}/${id}_palette.png"
+  local gif="${outdir}/${id}.gif"
+
+  # Generate palette then convert
+  ffmpeg -i "$mp4" -vf \
+    "fps=${fps},scale=${width}:-1:flags=lanczos,palettegen" \
+    -y "$palette"
+
+  ffmpeg -i "$mp4" -i "$palette" -filter_complex \
+    "fps=${fps},scale=${width}:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+    -b:v "${bitrate}" \
+    -y "$gif"
+  rm -f "$palette" "$mp4"
+  rm -f "$palette"
+  echo "Done: $gif"
+}
+
 # [[ -z "$TMUX" ]] && tmux attach 2>/dev/null
 export PATH="$HOME/.npm-global/bin:$PATH"
