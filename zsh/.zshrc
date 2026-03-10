@@ -34,6 +34,7 @@ alias ls='ls --color=always'
 alias start='start-hyprland'
 alias less='less -R'
 alias lg='lazygit'
+alias ss='slurp | grim -g - - | wl-copy'
 
 #tmux binds
 alias config='tmux attach -s config'
@@ -51,8 +52,6 @@ update()
 {
 	sudo pacman -Syu
 }
-
-alias ss='slurp | grim -g - - | wl-copy'
 
 connect(){
   kitty +kitten ssh myserver
@@ -74,24 +73,40 @@ pm(){
   pacmixer
 }
 
+y(){
+  local url="$1"
+  yt-dlp $url
+}
+
+ya(){
+  local url="$1"
+  yt-dlp -t mp3 "$url" -o "~/Music/%(uploader)s - %(title)s.%(ext)s"
+}
+
 yt2gif() {
   local url="$1"
   local outdir="$HOME/Pictures/gifs"
   mkdir -p "$outdir"
-
-  # Download best mp4, filename = video ID
-  yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]" \
+  local mp4=$(yt-dlp \
+    -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" \
     --merge-output-format mp4 \
-    -o "${outdir}/%(id)s.mp4" "$url"
+    -o "${outdir}/%(id)s.mp4" \
+    --print after_move:filepath \
+    "$url")
 
-  # Get the video ID yt-dlp resolved
-  local id=$(yt-dlp --get-id "$url")
-  local mp4="${outdir}/${id}.mp4"
+  if [[ ! -f "$mp4" ]]; then
+    echo "Error: download failed or file not found: $mp4"
+    return 1
+  fi
 
-  # Get original video stats
+  local base="${mp4%.mp4}"
+  local palette="${base}_palette.png"
+  local gif="${base}.gif"
+
   local fps=$(ffprobe -v error -select_streams v:0 \
     -show_entries stream=r_frame_rate \
-    -of default=noprint_wrappers=1:nokey=1 "$mp4" | bc)
+    -of default=noprint_wrappers=1:nokey=1 "$mp4" \
+    | awk -F'/' '{printf "%.3f", $1/$2}')
 
   local width=$(ffprobe -v error -select_streams v:0 \
     -show_entries stream=width \
@@ -101,10 +116,6 @@ yt2gif() {
     -show_entries stream=bit_rate \
     -of default=noprint_wrappers=1:nokey=1 "$mp4")
 
-  local palette="${outdir}/${id}_palette.png"
-  local gif="${outdir}/${id}.gif"
-
-  # Generate palette then convert
   ffmpeg -i "$mp4" -vf \
     "fps=${fps},scale=${width}:-1:flags=lanczos,palettegen" \
     -y "$palette"
@@ -113,8 +124,8 @@ yt2gif() {
     "fps=${fps},scale=${width}:-1:flags=lanczos[x];[x][1:v]paletteuse" \
     -b:v "${bitrate}" \
     -y "$gif"
+
   rm -f "$palette" "$mp4"
-  rm -f "$palette"
   echo "Done: $gif"
 }
 

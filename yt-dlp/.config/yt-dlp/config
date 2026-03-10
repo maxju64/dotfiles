@@ -4,4 +4,5 @@
 --embed-metadata
 --write-subs
 --sub-lang en
---output ~/Videos/%(title)s.%(ext)s
+--cookies ~/.config/yt-dlp/cookies.txt
+--output ~/Videos/%(id)s.%(ext)s
