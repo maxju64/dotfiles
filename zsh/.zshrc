@@ -1,26 +1,34 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
+export MANPATH="/usr/local/texlive/2026/texmf-dist/doc/man:$MANPATH"
+export INFOPATH="/usr/local/texlive/2026/texmf-dist/doc/info:$INFOPATH"
+export PATH="/usr/local/texlive/2026/bin/x86_64-linux:$PATH"
 ZSH_THEME="robbyrussell"
 HYPHEN_INSENSITIVE="true"
 zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':autocomplete:*' add-semicolon no
 # DISABLE_LS_COLORS="true"
-
+autoload -U compinit; compinit
+#Environment Variables
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export NVIDIA_DRIVER_CAPABILITIES=all
 export TERMINAL=kitty
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LESS=""
+export ARCHFLAGS="-arch $(uname -m)"
+export ZSH_AUTOSUGGEST_STRATEGY=(completion)
+#source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
 HIST_STAMPS="yyyy-mm-dd"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
-
 export MANPATH="/usr/local/man:$MANPATH"
 [ -f "/home/max/.ghcup/env" ] && . "/home/max/.ghcup/env" # ghcup-env
 
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LESS=""
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
@@ -28,7 +36,6 @@ else
   export EDITOR='vim'
 fi
 
-export ARCHFLAGS="-arch $(uname -m)"
 
 alias ls='ls --color=always'
 alias start='start-hyprland'
@@ -69,15 +76,18 @@ whatsonport() {
     lsof -i tcp:$1
 }
 
+#Open pacmixer
 pm(){
   pacmixer
 }
 
+#Run yt-dlp with my config
 y(){
   local url="$1"
   yt-dlp $url
 }
 
+#Download music to ~/Music
 ya(){
   local url="$1"
   yt-dlp -t mp3 "$url" -o "~/Music/%(uploader)s - %(title)s.%(ext)s"
@@ -131,3 +141,7 @@ yt2gif() {
 
 # [[ -z "$TMUX" ]] && tmux attach 2>/dev/null
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
