@@ -12,3 +12,4 @@ vim.g.snacks_animate = false
 vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.relativenumber = true
+vim.opt.clipboard = "unnamedplus"
