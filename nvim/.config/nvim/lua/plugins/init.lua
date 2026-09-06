@@ -4,6 +4,15 @@ return {
     -- event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
   },
+    {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "clangd"
+      }
+    }
+  }
+
 --  {
 --    "folke/snacks.nvim",
 --    priority = 1000,

@@ -12,22 +12,13 @@ map("t", "<C-h>", "<C-\\><C-N><C-w>h", { desc = "window left" })
 map("t", "<C-j>", "<C-\\><C-N><C-w>j", { desc = "window down" })
 map("t", "<C-k>", "<C-\\><C-N><C-w>k", { desc = "window up" })
 map("t", "<C-l>", "<C-\\><C-N><C-w>l", { desc = "window right" })
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 -- Show documentation in a floating window over the word under the cursor
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Show documentation' })
 vim.keymap.set('n', '<leader>th', ':split | terminal<CR>', { desc = 'Terminal Horizontal' })
 
--- vim.keymap.set("n", "<F5>", function()
---   vim.fn.chansend(job_id, { "echo 'hi'\r\n" })
--- end)
--- 
--- vim.keymap.set("n", "<F6>", function()
---   vim.fn.chansend(job_id, { "make\r\n" })
--- end)
-
 map("t", "<C-x>", "<C-\\><C-N>:q\r", { desc = "terminal close" })
-map("t", "<C-e>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
+map("t", "<C-e>", "<C-\\><C-N>", { desc = "terminal escape insert mode" })
 map({ "n", "t" }, "<F5>", function()
  require("nvchad.term").runner {
     pos = "sp",

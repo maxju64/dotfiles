@@ -6,7 +6,8 @@ local servers = {
   html = {},
   awk_ls = {},
   bashls = {},
-  clang = {},
+  clangd = {},
+  actionlint = {},
 
   pyright = {
     settings = {
