@@ -4,8 +4,6 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
--- map("n", ";", ":", { desc = "CMD enter command mode" })
-
 -- Navigation between terminal panes
 map("i", "jk", "<ESC>")
 map("t", "<C-h>", "<C-\\><C-N><C-w>h", { desc = "window left" })
@@ -17,26 +15,37 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", { desc = "window right" })
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Show documentation' })
 vim.keymap.set('n', '<leader>th', ':split | terminal<CR>', { desc = 'Terminal Horizontal' })
 
+map("n", "<leader>nc", ":NvCheatsheet\r", { desc = "NvChad Cheatsheet" })
 map("t", "<C-x>", "<C-\\><C-N>:q\r", { desc = "terminal close" })
 map("t", "<C-e>", "<C-\\><C-N>", { desc = "terminal escape insert mode" })
+
+local function run_code(command, position, size)
+  require("nvchad.term").runner {
+    pos = position,
+    size = size,
+    cmd = command,
+    id = "ekk",
+    clear_cmd = false,
+  }
+end
+
+-- Code Runners
 map({ "n", "t" }, "<F5>", function()
- require("nvchad.term").runner {
-    pos = "sp",
-    size = 0.2,
-    cmd = "make",
-    id = "ekk",
-    clear_cmd = false
- }
-end)
+  vim.cmd("w")
+  run_code("make", "sp", 0.2)
+end, {desc = "Run make"})
+
 map({ "n", "t" }, "<F6>", function()
- require("nvchad.term").runner {
-    pos = "sp",
-    size = 0.2,
-    cmd = "make run",
-    id = "ekk",
-    clear_cmd = false
- }
-end)
+  vim.cmd("w")
+  vim.cmd("wincmd j")
+  run_code("make run", "sp", 0.2)
+end, {desc = "Run make run in spawned terminal"} )
+
+map({ "n", "t" }, "<F7>", function()
+  vim.cmd("w")
+  vim.cmd("wincmd l")
+  run_code("make debug", "vsp", 0.3)
+end, {desc = "Run make debug in spawned terminal"})
 
 -- load the session for the current directory
 vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
