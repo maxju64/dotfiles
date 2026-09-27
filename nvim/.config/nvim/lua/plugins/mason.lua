@@ -1,11 +1,10 @@
-local plugins = {
+return {
   {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        "clangd"
-      }
-    }
-  }
+        "clangd",
+      },
+    },
+  },
 }
-return plugins

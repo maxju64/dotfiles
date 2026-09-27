@@ -1,7 +1,5 @@
 require("nvchad.configs.lspconfig").defaults()
 
--- local servers = { "html", "cssls" }
--- vim.lsp.enable(servers)
 local servers = {
   html = {},
   awk_ls = {},
@@ -26,6 +24,7 @@ for name, opts in pairs(servers) do
   vim.lsp.enable(name)
 end
 
+--require("nvchad.mason").install_all()
 -- if you dont want to call the enable method in the loop, just pass a table.
 -- vim.lsp.enable(vim.tbl_keys(servers))
 -- vim.lsp.enable({"pyright", "clangd"})

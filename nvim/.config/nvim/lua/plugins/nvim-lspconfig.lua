@@ -1,4 +1,4 @@
-return{
+return {
   {
     "neovim/nvim-lspconfig",
     config = function()
