@@ -144,4 +144,4 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+#source <(ng completion script)
