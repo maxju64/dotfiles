@@ -27,7 +27,6 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 export MANPATH="/usr/local/man:$MANPATH"
-[ -f "/home/max/.ghcup/env" ] && . "/home/max/.ghcup/env" # ghcup-env
 
 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -145,3 +144,5 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 # Load Angular CLI autocompletion.
 #source <(ng completion script)
+
+[ -f "/home/max/.ghcup/env" ] && . "/home/max/.ghcup/env" # ghcup-env

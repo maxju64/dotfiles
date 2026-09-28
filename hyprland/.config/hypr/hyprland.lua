@@ -22,6 +22,9 @@ local fileManager = "dolphin"
 local menu = "hyprlauncher"
 local browser = "firefox"
 
+-- exec-once = xrandr --output DP-1 --set "Broadcast RGB" "Full"
+-- exec-once = wlsunset -t 2500 -T 6500 -l 33.9 -L -118.0
+-- exec-once = gnome-keyring-daemon --start --components=secrets,ssh,pkcs11
 -------------------
 ---- AUTOSTART ----
 -------------------
@@ -33,8 +36,10 @@ local browser = "firefox"
 --
 hl.on("hyprland.start", function()
 	hl.exec_cmd(terminal)
+	hl.exec_cmd(browser, { workspace = "2" })
 	hl.exec_cmd("nm-applet")
-	hl.exec_cmd("waybar & hyprpaper & firefox")
+	hl.exec_cmd("waybar")
+	hl.exec_cmd("hyprpaper")
 	-- hl.exec_cmd(browser, { workspace = "2", silent = true })
 end)
 
